@@ -63,7 +63,7 @@ namespace DictionaryDemonstration
             //    }
             //}
             
-            for(int x = 0; x <= 5; x++)
+            for(int x = 5; x >= 0; x--)
             {
                 List<string[]> temp = shop;
                 for (int y = 0; y < temp.Count; y++)
@@ -72,7 +72,6 @@ namespace DictionaryDemonstration
                     if(xnum == x)
                     {
                         rating.Add(shop[y]);
-                        shop.RemoveAt(y);
                     }
                 }
             }

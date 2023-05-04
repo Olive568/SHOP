@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Net;
 using System.Runtime.CompilerServices;
+using System.Xml.Schema;
+using System.ComponentModel.Design;
 
 namespace DictionaryDemonstration
 {
@@ -14,9 +16,12 @@ namespace DictionaryDemonstration
     {
         static void Main(string[] args)
         {
+            int count = 0;
+            int climb = 0;
             string line = "";
             string[] start = new string[] { };
             string[] setup = new string[4] ;
+            List<string[]> rating = new List<string[]>();
             List<string[]> shop = new List<string[]>();
 
 
@@ -33,6 +38,7 @@ namespace DictionaryDemonstration
                     }
                 }
             }
+        
             string source = setup[1];
             string outthere = setup[3];
 
@@ -45,6 +51,42 @@ namespace DictionaryDemonstration
 
                 }
             }
+            //foreach (string[] s in shop)
+            //{
+            //    if (s[5] == "case-fan")
+            //    {
+            //        foreach(string l in s)
+            //        {
+            //            Console.Write(l + "\t");
+            //        }
+            //        Console.WriteLine();
+            //    }
+            //}
+            
+            for(int x = 0; x <= 5; x++)
+            {
+                List<string[]> temp = shop;
+                for (int y = 0; y < temp.Count; y++)
+                {
+                    int xnum = int.Parse(shop[y][1]);
+                    if(xnum == x)
+                    {
+                        rating.Add(shop[y]);
+                        shop.RemoveAt(y);
+                    }
+                }
+            }
+            foreach (string[] k in rating)
+            {
+                foreach(string s in k)
+                {
+                    Console.Write(s + "\t");
+                }
+                count++;
+                Console.WriteLine();
+            }
+            Console.WriteLine(count);
+            Console.ReadKey();
         }
     }
 }

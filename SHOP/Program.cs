@@ -21,7 +21,7 @@ namespace DictionaryDemonstration
             string line = "";
             string[] start = new string[2] ;
             string[] setup = new string[4] ;
-            string[] categories = new string[26] { "case-accessory", "case-fan", "case", "cpu-cooler", "cpu", 
+            string[] categories = new string[27] { "case-accessory", "case-fan", "case", "cpu-cooler", "cpu", 
                 "external-hard-drive" , "fan-controller" , "headphones" , "internal-hard-drive" , "keyboard", 
                 "laptop" , "memory", "monitor" , "motherboard" , "mouse" , "optical-drive" , "os" , "power-supply" , "software" , "sound-card"
             , "speakers", "thermal-paste" , "ups" , "video-card" , "webcam" , "wired-network-card" , "wireless-network-card"};
@@ -68,6 +68,8 @@ namespace DictionaryDemonstration
             //        }
             //    }
             //}
+
+            //Category system please check
             for (int x = 0; x < categories.Length; x++)
             {
                 string filePath = categories[x] + ".txt";
@@ -96,6 +98,7 @@ namespace DictionaryDemonstration
             //    Console.WriteLine();
             //}
             //Console.WriteLine(count);
+            Console.WriteLine("done");
             Console.ReadKey();
         }
     }

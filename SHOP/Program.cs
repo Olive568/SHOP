@@ -19,8 +19,12 @@ namespace DictionaryDemonstration
             int count = 0;
             int climb = 0;
             string line = "";
-            string[] start = new string[] { };
+            string[] start = new string[2] ;
             string[] setup = new string[4] ;
+            string[] categories = new string[26] { "case-accessory", "case-fan", "case", "cpu-cooler", "cpu", 
+                "external-hard-drive" , "fan-controller" , "headphones" , "internal-hard-drive" , "keyboard", 
+                "laptop" , "memory", "monitor" , "motherboard" , "mouse" , "optical-drive" , "os" , "power-supply" , "software" , "sound-card"
+            , "speakers", "thermal-paste" , "ups" , "video-card" , "webcam" , "wired-network-card" , "wireless-network-card"};
             List<string[]> rating = new List<string[]>();
             List<string[]> shop = new List<string[]>();
 
@@ -51,40 +55,47 @@ namespace DictionaryDemonstration
 
                 }
             }
-            //foreach (string[] s in shop)
+ 
+            //for(int x = 5; x >= 0; x--)
             //{
-            //    if (s[5] == "case-fan")
+            //    List<string[]> temp = shop;
+            //    for (int y = 0; y < temp.Count; y++)
             //    {
-            //        foreach(string l in s)
+            //        int xnum = int.Parse(shop[y][1]);
+            //        if(xnum == x)
             //        {
-            //            Console.Write(l + "\t");
+            //            rating.Add(shop[y]);
             //        }
-            //        Console.WriteLine();
             //    }
             //}
-            
-            for(int x = 5; x >= 0; x--)
+            for (int x = 0; x < categories.Length; x++)
             {
-                List<string[]> temp = shop;
-                for (int y = 0; y < temp.Count; y++)
+                string filePath = categories[x] + ".txt";
+                using (StreamWriter sw = new StreamWriter(filePath)) 
                 {
-                    int xnum = int.Parse(shop[y][1]);
-                    if(xnum == x)
+                    foreach(string[] s in shop)
                     {
-                        rating.Add(shop[y]);
+                        if (s[5] == categories[x])
+                        {
+                            foreach(string l in s)
+                            {
+                                sw.Write(l + "\t");
+                            }
+                            sw.WriteLine();
+                        }
                     }
                 }
             }
-            foreach (string[] k in rating)
-            {
-                foreach(string s in k)
-                {
-                    Console.Write(s + "\t");
-                }
-                count++;
-                Console.WriteLine();
-            }
-            Console.WriteLine(count);
+            //foreach (string[] k in rating)
+            //{
+            //    foreach(string s in k)
+            //    {
+            //        Console.Write(s + "\t");
+            //    }
+            //    count++;
+            //    Console.WriteLine();
+            //}
+            //Console.WriteLine(count);
             Console.ReadKey();
         }
     }

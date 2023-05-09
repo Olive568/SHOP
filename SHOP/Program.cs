@@ -105,12 +105,12 @@ namespace DictionaryDemonstration
                     case "RATING COUNT":
                         foreach (string[] s in shop)
                         {
-                            if (!list.Contains(s[2]))
+                            if (!list.Contains(int.Parse(s[2])))
                             {
                                 list.Add(int.Parse(s[2]));
                             }
                         }
-                        bool swapped;
+                        bool swapped = true;
                         do
                         {
                             swapped = false;
@@ -127,28 +127,26 @@ namespace DictionaryDemonstration
                                 }
                             }
                         } while (swapped);
-                        foreach (string[] s in shop)
+                        foreach (int count in list)
                         {
-                            for(int i =0; i < list.Count; i++) 
+                            foreach (string[] s in shop)
                             {
-                                if (list.Contains(s[2]))
+                                if (int.Parse(s[2]) == count)
                                 {
-                                    foreach(string l in s) 
+                                    foreach (string l in s)
                                     {
-                                        Console.WriteLine(l + ",");
+                                        Console.Write(l + ",");
                                     }
                                     Console.WriteLine();
                                 }
                             }
                         }
-
                         break; 
                         
                 }
                 
             }           
             Console.WriteLine("done");
-            Console.ReadKey();
         }
     }
 }

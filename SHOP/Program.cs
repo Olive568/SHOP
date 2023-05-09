@@ -19,6 +19,7 @@ namespace DictionaryDemonstration
             int count = 0;
             int climb = 0;
             string line = "";
+            List<string[]> shop = new List<string[]>();
             string[] start = new string[2] ;
             string[] setup = new string[4] ;
             string[] categories = new string[27] { "case-accessory", "case-fan", "case", "cpu-cooler", "cpu", 
@@ -26,7 +27,7 @@ namespace DictionaryDemonstration
                 "laptop" , "memory", "monitor" , "motherboard" , "mouse" , "optical-drive" , "os" , "power-supply" , "software" , "sound-card"
             , "speakers", "thermal-paste" , "ups" , "video-card" , "webcam" , "wired-network-card" , "wireless-network-card"};
             List<string[]> rating = new List<string[]>();
-            List<string[]> shop = new List<string[]>();
+            bool cont = true;
 
 
             using (StreamReader sr = new StreamReader("setup.ini"))
@@ -55,49 +56,97 @@ namespace DictionaryDemonstration
 
                 }
             }
- 
-            //for(int x = 5; x >= 0; x--)
-            //{
-            //    List<string[]> temp = shop;
-            //    for (int y = 0; y < temp.Count; y++)
-            //    {
-            //        int xnum = int.Parse(shop[y][1]);
-            //        if(xnum == x)
-            //        {
-            //            rating.Add(shop[y]);
-            //        }
-            //    }
-            //}
 
-            //Category system please check
-            for (int x = 0; x < categories.Length; x++)
+
+            while (cont)
             {
-                string filePath = categories[x] + ".txt";
-                using (StreamWriter sw = new StreamWriter(filePath)) 
+                List<int> list = new List<int>();
+                List<string[]> main = new List<string[]>();
+                Console.WriteLine("COMMANDS: RATING, RATING COUNT, PRICE");
+                string choice = Console.ReadLine();
+                choice = choice.ToUpper();
+                switch (choice)
                 {
-                    foreach(string[] s in shop)
-                    {
-                        if (s[5] == categories[x])
+                    case "RATING":
+                        for (int x = 5; x >= 0; x--)
                         {
-                            foreach(string l in s)
+                            List<string[]> temp = shop;
+                            for (int y = 0; y < temp.Count; y++)
                             {
-                                sw.Write(l + "\t");
+                                int xnum = int.Parse(shop[y][1]);
+                                if (xnum == x)
+                                {
+                                    main.Add(shop[y]);
+                                }
                             }
-                            sw.WriteLine();
                         }
-                    }
+                        for (int x = 0; x < categories.Length; x++)
+                        {
+                            string filePath = outthere + categories[x] + ".csv";
+                            using (StreamWriter sw = new StreamWriter(filePath))
+                            {
+                                foreach (string[] s in main)
+                                {
+                                    if (s[5] == categories[x])
+                                    {
+                                        foreach (string l in s)
+                                        {
+                                            sw.Write(l + ",");
+                                        }
+                                        sw.WriteLine();
+                                    }
+                                }
+                            }
+                        }
+                        Console.WriteLine("Rating Csv's has been created, press any key to continue");
+                        Console.ReadKey();
+                        Console.Clear();
+                        break;
+                    case "RATING COUNT":
+                        foreach (string[] s in shop)
+                        {
+                            if (!list.Contains(s[2]))
+                            {
+                                list.Add(int.Parse(s[2]));
+                            }
+                        }
+                        bool swapped;
+                        do
+                        {
+                            swapped = false;
+                            for (int i = 0; i < list.Count - 1; i++)
+                            {
+                                if (list[i] < list[i + 1])
+                                {
+                                    // Swap the elements
+                                    int temp = list[i];
+                                    list[i] = list[i + 1];
+                                    list[i + 1] = temp;
+
+                                    swapped = true;
+                                }
+                            }
+                        } while (swapped);
+                        foreach (string[] s in shop)
+                        {
+                            for(int i =0; i < list.Count; i++) 
+                            {
+                                if (list.Contains(s[2]))
+                                {
+                                    foreach(string l in s) 
+                                    {
+                                        Console.WriteLine(l + ",");
+                                    }
+                                    Console.WriteLine();
+                                }
+                            }
+                        }
+
+                        break; 
+                        
                 }
-            }
-            //foreach (string[] k in rating)
-            //{
-            //    foreach(string s in k)
-            //    {
-            //        Console.Write(s + "\t");
-            //    }
-            //    count++;
-            //    Console.WriteLine();
-            //}
-            //Console.WriteLine(count);
+                
+            }           
             Console.WriteLine("done");
             Console.ReadKey();
         }

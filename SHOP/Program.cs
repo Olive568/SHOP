@@ -19,6 +19,7 @@ namespace DictionaryDemonstration
             int count = 0;
             int climb = 0;
             string line = "";
+            bool swapped = true;
             List<string[]> shop = new List<string[]>();
             string[] start = new string[2] ;
             string[] setup = new string[4] ;
@@ -28,8 +29,6 @@ namespace DictionaryDemonstration
             , "speakers", "thermal-paste" , "ups" , "video-card" , "webcam" , "wired-network-card" , "wireless-network-card"};
             List<string[]> rating = new List<string[]>();
             bool cont = true;
-
-
             using (StreamReader sr = new StreamReader("setup.ini"))
             {
                 int t = 0;
@@ -42,11 +41,9 @@ namespace DictionaryDemonstration
                         t++;
                     }
                 }
-            }
-        
+            }        
             string source = setup[1];
             string outthere = setup[3];
-
             using (StreamReader sr = new StreamReader(source))
             {
                 while ((line = sr.ReadLine()) != null)
@@ -56,8 +53,6 @@ namespace DictionaryDemonstration
 
                 }
             }
-
-
             while (cont)
             {
                 List<int> list = new List<int>();
@@ -111,7 +106,6 @@ namespace DictionaryDemonstration
                                 list.Add(int.Parse(s[2]));
                             }
                         }
-                        bool swapped = true;
                         do
                         {
                             swapped = false;
@@ -128,14 +122,13 @@ namespace DictionaryDemonstration
                                 }
                             }
                         } while (swapped);
-
                         foreach (int com in list)
                         {
                             for (int x = 0; x < categories.Length; x++)
                             {
                                 string filePath = outthere + categories[x] + ".csv";
                                 using (StreamWriter sw = new StreamWriter(filePath))
-                                {
+                                {                                   
                                     foreach (string[] s in shop)
                                     {
                                         if (int.Parse(s[2]) == com)
@@ -155,10 +148,70 @@ namespace DictionaryDemonstration
                             }
                         }
                         Console.WriteLine(count);
-                        break; 
+                        break;
+                    case "PRICE":
+                        //List<double> doubles = new List<double>();
+                        //foreach (string[] s in shop)
+                        //{
+                        //    if (!doubles.Contains(double.Parse(s[3])))
+                        //    {
+                        //        doubles.Add(double.Parse(s[3]));
+                        //    }
+                        //}
+                        Console.WriteLine("start");
+                        do
+                        {
+                            swapped = false;
+                            for (int i = 0; i < shop.Count - 1; i++)
+                            {
+                                if (double.Parse(shop[i][3]) < double.Parse(shop[i + 1][3]))
+                                {
+                                    string[] temp = shop[i];
+                                    shop[i] = shop[i + 1];
+                                    shop[i + 1] = temp;
+
+                                    swapped = true;
+                                }
+                            }
+                        } while (swapped);
+                        Console.WriteLine("finish");
+                        foreach (string[] s in shop)
+                        {
+                            foreach(string l in s) 
+                            {
+                                Console.Write(s + "\t");
+                            }
+                            Console.WriteLine();
+                        }
                         
-                }
-                
+                        //foreach (double com in doubles)
+                        //{
+                        //    for (int x = 0; x < categories.Length; x++)
+                        //    {
+                        //        string filePath = outthere + categories[x] + ".csv";
+                        //        using (StreamWriter sw = new StreamWriter(filePath))
+                        //        {
+                        //            foreach (string[] s in shop)
+                        //            {
+                        //                if (double.Parse(s[3]) == com)
+                        //                {
+                        //                    if (s[5] == categories[x])
+                        //                    {
+                        //                        foreach (string l in s)
+                        //                        {
+                        //                            sw.Write(l + ",");
+                        //                        }
+                        //                        sw.WriteLine();
+                        //                        count++;
+                        //                    }
+                        //                }
+                        //            }
+                        //        }
+                        //    }
+                        //}
+                        Console.WriteLine(count);
+                        break;
+                }               
             }           
             Console.WriteLine("done");
         }

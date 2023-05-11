@@ -84,6 +84,7 @@ namespace DictionaryDemonstration
                         {
                             string filePath = outthere + categories[x] + ".csv";
                             using (StreamWriter sw = new StreamWriter(filePath))
+                            
                             {
                                 foreach (string[] s in main)
                                 {
@@ -127,20 +128,33 @@ namespace DictionaryDemonstration
                                 }
                             }
                         } while (swapped);
-                        foreach (int count in list)
+
+                        foreach (int com in list)
                         {
-                            foreach (string[] s in shop)
+                            for (int x = 0; x < categories.Length; x++)
                             {
-                                if (int.Parse(s[2]) == count)
+                                string filePath = outthere + categories[x] + ".csv";
+                                using (StreamWriter sw = new StreamWriter(filePath))
                                 {
-                                    foreach (string l in s)
+                                    foreach (string[] s in shop)
                                     {
-                                        Console.Write(l + ",");
+                                        if (int.Parse(s[2]) == com)
+                                        {
+                                            if (s[5] == categories[x])
+                                            {
+                                                foreach (string l in s)
+                                                {
+                                                    sw.Write(l + ",");
+                                                }
+                                                sw.WriteLine();
+                                                count++;
+                                            }
+                                        }
                                     }
-                                    Console.WriteLine();
                                 }
                             }
                         }
+                        Console.WriteLine(count);
                         break; 
                         
                 }

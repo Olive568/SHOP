@@ -79,7 +79,7 @@ namespace DictionaryDemonstration
                         {
                             string filePath = outthere + categories[x] + ".csv";
                             using (StreamWriter sw = new StreamWriter(filePath))
-                            
+
                             {
                                 foreach (string[] s in main)
                                 {
@@ -122,31 +122,32 @@ namespace DictionaryDemonstration
                                 }
                             }
                         } while (swapped);
-                        foreach (int com in list)
+                        for (int x = 0; x < categories.Length; x++)
                         {
-                            for (int x = 0; x < categories.Length; x++)
+                            string filePath = outthere + categories[x] + ".csv";
+                            using (StreamWriter sw = new StreamWriter(filePath))
                             {
-                                string filePath = outthere + categories[x] + ".csv";
-                                using (StreamWriter sw = new StreamWriter(filePath))
-                                {                                   
+                                foreach (int com in list)
+                                {                          
                                     foreach (string[] s in shop)
                                     {
-                                        if (int.Parse(s[2]) == com)
+                                        if (int.Parse(s[2]) == com && s[5] == categories[x])
                                         {
-                                            if (s[5] == categories[x])
+                                            Console.WriteLine($"s[1]: {s[1]}, s[2]: {s[2]}");
+                                            for (int t = 0; t < s.Length; t++)
                                             {
-                                                foreach (string l in s)
-                                                {
-                                                    sw.Write(l + ",");
-                                                }
-                                                sw.WriteLine();
-                                                count++;
+                                                sw.Write(s[t] + ",");
                                             }
+                                            sw.WriteLine();
+                                            count++;
                                         }
                                     }
                                 }
                             }
                         }
+
+
+
                         Console.WriteLine(count);
                         break;
                     case "PRICE":

@@ -28,6 +28,7 @@ namespace DictionaryDemonstration
                 "laptop" , "memory", "monitor" , "motherboard" , "mouse" , "optical-drive" , "os" , "power-supply" , "software" , "sound-card"
             , "speakers", "thermal-paste" , "ups" , "video-card" , "webcam" , "wired-network-card" , "wireless-network-card"};
             List<string[]> rating = new List<string[]>();
+            List<string[]> shop2 = new List<string[]>();
             bool cont = true;
             using (StreamReader sr = new StreamReader("setup.ini"))
             {
@@ -57,12 +58,20 @@ namespace DictionaryDemonstration
             {
                 List<int> list = new List<int>();
                 List<string[]> main = new List<string[]>();
-                Console.WriteLine("COMMANDS: RATING, RATING COUNT, PRICE");
+                Console.WriteLine("There are " + categories.Length + " categories");
+                Console.WriteLine("This program will segregate files by category");
+                Console.WriteLine("How Do you want them To be sorted? It will always be in ascending order");
+                Console.WriteLine("\t" + "[A] Rating");
+                Console.WriteLine("\t" + "[B] Rating Count");
+                Console.WriteLine("\t" + "[C] Price");
+                Console.WriteLine("\t" + "[D] Clear Console");
+                Console.WriteLine("\t" + "[E] Exit");
+                Console.Write("Please input your answer here: ");
                 string choice = Console.ReadLine();
                 choice = choice.ToUpper();
                 switch (choice)
                 {
-                    case "RATING":
+                    case "A":
                         for (int x = 5; x >= 0; x--)
                         {
                             List<string[]> temp = shop;
@@ -77,6 +86,7 @@ namespace DictionaryDemonstration
                         }
                         for (int x = 0; x < categories.Length; x++)
                         {
+                            Console.Write("sorting " + categories[x] + "   ....   ");
                             string filePath = outthere + categories[x] + ".csv";
                             using (StreamWriter sw = new StreamWriter(filePath))
 
@@ -93,12 +103,11 @@ namespace DictionaryDemonstration
                                     }
                                 }
                             }
+                            Console.Write("Done!");
+                            Console.WriteLine();
                         }
-                        Console.WriteLine("Rating Csv's has been created, press any key to continue");
-                        Console.ReadKey();
-                        Console.Clear();
                         break;
-                    case "RATING COUNT":
+                    case "B":
                         foreach (string[] s in shop)
                         {
                             if (!list.Contains(int.Parse(s[2])))
@@ -124,97 +133,80 @@ namespace DictionaryDemonstration
                         } while (swapped);
                         for (int x = 0; x < categories.Length; x++)
                         {
+                            Console.Write("sorting " + categories[x] + "   ....   ");
                             string filePath = outthere + categories[x] + ".csv";
                             using (StreamWriter sw = new StreamWriter(filePath))
                             {
                                 foreach (int com in list)
-                                {                          
+                                {
                                     foreach (string[] s in shop)
                                     {
                                         if (int.Parse(s[2]) == com && s[5] == categories[x])
                                         {
-                                            Console.WriteLine($"s[1]: {s[1]}, s[2]: {s[2]}");
                                             for (int t = 0; t < s.Length; t++)
                                             {
                                                 sw.Write(s[t] + ",");
                                             }
                                             sw.WriteLine();
-                                            count++;
                                         }
                                     }
                                 }
                             }
-                        }
-
-
-
-                        Console.WriteLine(count);
-                        break;
-                    case "PRICE":
-                        //List<double> doubles = new List<double>();
-                        //foreach (string[] s in shop)
-                        //{
-                        //    if (!doubles.Contains(double.Parse(s[3])))
-                        //    {
-                        //        doubles.Add(double.Parse(s[3]));
-                        //    }
-                        //}
-                        Console.WriteLine("start");
-                        do
-                        {
-                            swapped = false;
-                            for (int i = 0; i < shop.Count - 1; i++)
-                            {
-                                if (double.Parse(shop[i][3]) < double.Parse(shop[i + 1][3]))
-                                {
-                                    string[] temp = shop[i];
-                                    shop[i] = shop[i + 1];
-                                    shop[i + 1] = temp;
-
-                                    swapped = true;
-                                }
-                            }
-                        } while (swapped);
-                        Console.WriteLine("finish");
-                        foreach (string[] s in shop)
-                        {
-                            foreach(string l in s) 
-                            {
-                                Console.Write(s + "\t");
-                            }
+                            Console.Write("Done!");
                             Console.WriteLine();
                         }
-                        
-                        //foreach (double com in doubles)
-                        //{
-                        //    for (int x = 0; x < categories.Length; x++)
-                        //    {
-                        //        string filePath = outthere + categories[x] + ".csv";
-                        //        using (StreamWriter sw = new StreamWriter(filePath))
-                        //        {
-                        //            foreach (string[] s in shop)
-                        //            {
-                        //                if (double.Parse(s[3]) == com)
-                        //                {
-                        //                    if (s[5] == categories[x])
-                        //                    {
-                        //                        foreach (string l in s)
-                        //                        {
-                        //                            sw.Write(l + ",");
-                        //                        }
-                        //                        sw.WriteLine();
-                        //                        count++;
-                        //                    }
-                        //                }
-                        //            }
-                        //        }
-                        //    }
-                        //}
-                        Console.WriteLine(count);
                         break;
-                }               
+                    case "C":
+                        for (int i = 0; i < shop.Count - 1; i++)
+                        {
+                            int maxIndex = i;
+                            for (int j = i + 1; j < shop.Count; j++)
+                            {
+                                if (double.Parse(shop[j][3]) > double.Parse(shop[maxIndex][3]))
+                                {
+                                    maxIndex = j;
+                                }
+                            }
+                            if (maxIndex != i)
+                            {
+                                count++;
+                                string[] temp = shop[maxIndex];
+                                shop[maxIndex] = shop[i];
+                                shop[i] = temp;
+                            }
+                        }
+                        for(int x = 0; x < categories.Length; x++)
+                        {
+                            string filePath = outthere + categories[x] + ".csv";
+                            Console.Write("sorting " +categories[x] + "   ....   ");
+                            using (StreamWriter sw = new StreamWriter(filePath))
+                            {
+                                foreach (string[] s in shop)
+                                    if (s[5] == categories[x])
+                                    { 
+                                        foreach(string l in s)
+                                        {
+                                            sw.Write(l + ",");
+                                        }
+                                        sw.WriteLine();
+                                    }      
+                            }
+                            Console.Write("Done!");
+                            Console.WriteLine();
+                        }
+                        break;
+                    case "D":
+                        Console.Clear();
+                        break;
+                    case "E":
+                            cont = false;
+                            break;
+                    default:
+                        Console.WriteLine("That is not a valid command");
+                            break;
+                }
+                             
             }           
-            Console.WriteLine("done");
         }
     }
 }

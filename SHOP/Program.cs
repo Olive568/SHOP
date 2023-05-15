@@ -122,7 +122,6 @@ namespace DictionaryDemonstration
                             {
                                 if (list[i] < list[i + 1])
                                 {
-                                    // Swap the elements
                                     int temp = list[i];
                                     list[i] = list[i + 1];
                                     list[i + 1] = temp;

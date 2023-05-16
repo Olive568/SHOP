@@ -23,10 +23,7 @@ namespace DictionaryDemonstration
             List<string[]> shop = new List<string[]>();
             string[] start = new string[2] ;
             string[] setup = new string[4] ;
-            string[] categories = new string[27] { "case-accessory", "case-fan", "case", "cpu-cooler", "cpu", 
-                "external-hard-drive" , "fan-controller" , "headphones" , "internal-hard-drive" , "keyboard", 
-                "laptop" , "memory", "monitor" , "motherboard" , "mouse" , "optical-drive" , "os" , "power-supply" , "software" , "sound-card"
-            , "speakers", "thermal-paste" , "ups" , "video-card" , "webcam" , "wired-network-card" , "wireless-network-card"};
+            List<string> categories = new List<string>();
             List<string[]> rating = new List<string[]>();
             List<string[]> shop2 = new List<string[]>();
             bool cont = true;
@@ -54,11 +51,18 @@ namespace DictionaryDemonstration
 
                 }
             }
+            foreach (string[] s in shop)
+            {
+                if (!categories.Contains(s[5]))
+                {
+                    categories.Add(s[5]);
+                }
+            }
             while (cont)
             {
                 List<int> list = new List<int>();
                 List<string[]> main = new List<string[]>();
-                Console.WriteLine("There are " + categories.Length + " categories");
+                Console.WriteLine("There are " + categories.Count + " categories");
                 Console.WriteLine("This program will segregate files by category");
                 Console.WriteLine("How Do you want them To be sorted? It will always be in ascending order");
                 Console.WriteLine("\t" + "[A] Rating");
@@ -84,7 +88,7 @@ namespace DictionaryDemonstration
                                 }
                             }
                         }
-                        for (int x = 0; x < categories.Length; x++)
+                        for (int x = 0; x < categories.Count; x++)
                         {
                             Console.Write("sorting " + categories[x] + "   ....   ");
                             string filePath = outthere + categories[x] + ".csv";
@@ -130,7 +134,7 @@ namespace DictionaryDemonstration
                                 }
                             }
                         } while (swapped);
-                        for (int x = 0; x < categories.Length; x++)
+                        for (int x = 0; x < categories.Count; x++)
                         {
                             Console.Write("sorting " + categories[x] + "   ....   ");
                             string filePath = outthere + categories[x] + ".csv";
@@ -174,7 +178,7 @@ namespace DictionaryDemonstration
                                 shop[i] = temp;
                             }
                         }
-                        for(int x = 0; x < categories.Length; x++)
+                        for(int x = 0; x < categories.Count; x++)
                         {
                             string filePath = outthere + categories[x] + ".csv";
                             Console.Write("sorting " +categories[x] + "   ....   ");
